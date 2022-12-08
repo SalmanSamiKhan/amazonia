@@ -1,12 +1,23 @@
 function Rating(props) {
+    /**
+     * destruct rating numReviews from props
+     * 
+     */
     const { rating, numReviews } = props
     return (
         <div className="rating">
             <span>
                 <i className={
+                    /**
+                    If Rating is more than 1
+                    show 1 solid star fas- font aweome solid, fa - font awesome,
+                    If rating less than 1
+                    show half empty star by fas fa-star-half-alt
+                    Repeat this for 2, 2.5, 3, 3.5 and so on...
+                     */
                     rating >= 1
                         ? 'fas fa-star'
-                        : rating >= 0.5
+                        : rating >= 0.5 
                         ? 'fas fa-star-half-alt'
                         : 'far fa-star'
                 } ></i>

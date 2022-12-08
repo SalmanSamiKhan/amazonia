@@ -1,5 +1,4 @@
-import data from "./data";
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import Navbar from 'react-bootstrap/Navbar'
@@ -9,7 +8,7 @@ function App() {
   return (
     <BrowserRouter>
     {/* d-flex = display flex */}
-      <div className="d-flex flex-column site-container">
+      <div className="d-flex flex-column site-container"> 
         <header className="App-header">
           <Navbar bg="dark" variant="dark">
             <Container>
@@ -21,7 +20,8 @@ function App() {
 
         </header>
         <main>
-          <Container>
+        {/* Container Component provides a way to center and horizontally pad the contents */}
+          <Container className='mt-3'>
             <Routes>
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/" element={<HomeScreen />} />
