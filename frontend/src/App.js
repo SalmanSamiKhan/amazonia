@@ -17,17 +17,18 @@ function App() {
               </LinkContainer>
             </Container>
           </Navbar>
-
         </header>
+
         <main>
         {/* Container Component provides a way to center and horizontally pad the contents */}
           <Container className='mt-3'>
             <Routes>
-              <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/" element={<HomeScreen />} />
+              <Route path="/product/:slug" element={<ProductScreen />} />
             </Routes>
           </Container>
         </main>
+        
         <footer>
           <div className="text-center">All rights reserved </div>
         </footer>

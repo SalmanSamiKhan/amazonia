@@ -55,3 +55,9 @@
 # 12. Create Product Details Screen
 1. Fetch product from backend
 2. Create 3 columns for image, info and action
+
+# 13. Create Loading and Message Component
+1. Create loading component
+2. Use spinner component
+3. Craete message component
+4. Create utils.js to define getError fuction

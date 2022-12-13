@@ -7,7 +7,7 @@ function Product(props) {
     /**
      * destruct product from props
      * Using react Card component
-     * Link is use in place of <a>. Link prevents refreshing single page react app
+     * Link is used in place of <a>. Link prevents refreshing single page react app
      * Link use to="" instead of href="",
      * 
      * Card.Body, Card.Title are react bootstrap component
