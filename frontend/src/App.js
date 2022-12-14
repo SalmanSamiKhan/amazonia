@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { Store } from './Store';
 function App() {
-  const { state} = useContext(Store) //dispatch as ctxDispatch. ctx=context
-  const {cart} = state
+  const { state } = useContext(Store) //dispatch as ctxDispatch. ctx=context
+  const { cart } = state
   return (
     <BrowserRouter>
-    {/* d-flex = display flex */}
-      <div className="d-flex flex-column site-container"> 
+      {/* d-flex = display flex */}
+      <div className="d-flex flex-column site-container">
         <header className="App-header">
           <Navbar bg="dark" variant="dark">
             <Container>
@@ -28,7 +28,8 @@ function App() {
                   Cart
                   {cart.cartItems.length > 0 && (
                     <Badge pill bg="danger">
-                      {cart.cartItems.length}
+                    {/* a= accumulator, c=currentItem */}
+                      {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )}
                 </Link>
@@ -38,7 +39,7 @@ function App() {
         </header>
 
         <main>
-        {/* Container Component provides a way to center and horizontally pad the contents */}
+          {/* Container Component provides a way to center and horizontally pad the contents */}
           <Container className='mt-3'>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
@@ -46,7 +47,7 @@ function App() {
             </Routes>
           </Container>
         </main>
-        
+
         <footer>
           <div className="text-center">All rights reserved </div>
         </footer>
