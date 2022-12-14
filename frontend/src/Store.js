@@ -1,5 +1,10 @@
 import { createContext, useReducer } from "react";
 
+/**
+ * Context - Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+ * Store - A store holds the whole state tree of your application
+ */
+
 export const Store = createContext();
 
 const initialState = {
@@ -10,8 +15,8 @@ const initialState = {
 
 /**
  * Prevent adding duplicate product on cart
- * instead increase quantity if user tries ot add a product multiple times
- * 1. Item that we are going to add to cart
+ * instead increase quantity if user tries to add a product multiple times
+ * 1. Item that we are trying to add to cart
  * 2. Check if item already in cart or not, if yes put it in existItem variable 
  * 3. If item already in cart,
  * 4. use map item on cartItems to update current item with new item
@@ -35,13 +40,9 @@ function reducer(state, action) {
 }
 
 /**
- * Context - Context provides a way to pass data through the component tree without having to pass props down manually at every level.
- * Store - A store holds the whole state tree of your application
  * The <Provider> component makes the Redux store available to any nested components 
  * props. children is a special prop, automatically passed to every component,
  */
-
-
 
 export function StoreProvider(props) {
     const [state, dispatch] = useReducer(reducer, initialState)

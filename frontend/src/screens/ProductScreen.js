@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useReducer } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 //Bootstrap Component
 import Row from 'react-bootstrap/Row';
@@ -40,6 +40,7 @@ function ProductScreen() {
      * here dealing with single product
      * everything else is same as HomeScreen
      */
+  const navigate = useNavigate()
   const params = useParams();
   const { slug } = params;
   const [{ loading, error, product }, dispatch] = useReducer(reducer, {
@@ -70,7 +71,6 @@ function ProductScreen() {
      * 3. fetch data from ajax request
      * 4. concate product with quantity by default set to 1
      */
-
     const existItem = cart.cartItems.find( (x) => x._id===product._id) // --- (1)
     const quantity = existItem? existItem.quantity + 1 : 1 // --- (2) 
     const {data} = await axios.get(`/api/products/${product._id}`) // --- (3)
@@ -80,7 +80,9 @@ function ProductScreen() {
     }
     ctxDispatch({  // --- (4)
       type: 'CART_ADD_ITEM', 
-      payload: { ...product, quantity} })
+      payload: { ...product, quantity} 
+    })
+    navigate('/cart')
   }
 
   return loading ? (
