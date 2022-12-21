@@ -40,7 +40,7 @@ function HomeScreen() {
     const fetchData = async () => {
       /**
            * dispatch sends fetch request to back end
-           * if not err axios fetch data from backend using  express url
+           * if not err axios fetch data from backend using express url
            */
       dispatch({ type: 'FETCH_REQUEST' });
       try {
@@ -66,8 +66,8 @@ function HomeScreen() {
         {
           /**
                   Using ternary operator
-                  1. If loading true render Loading...
-                  2. If there was an err render error
+                  1. If loading true render Loading... via LoadingBox
+                  2. If there was an err render error via MessageBox
                   3. If success render products using map
                   4. using Row Col for responsiveness
                   */
@@ -79,7 +79,8 @@ function HomeScreen() {
             <Row>
               {products.map((product) => (
                 // sm = small , md=medium. lg = large -- screen
-                // slug is the unique identifying part of a web address, typically at the end of the URL.
+                // slug is the unique identifying part of a web address,
+                //typically at the end of the URL.
                 <Col key={product.slug} sm={6} md={4} lg={3} className="mb-3">
                   <Product product={product}></Product>
                 </Col>

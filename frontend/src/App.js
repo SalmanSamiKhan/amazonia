@@ -11,10 +11,11 @@ import { useContext } from 'react';
 import { Store } from './Store';
 import CartScreen from './screens/CartScreen';
 function App() {
-  const { state } = useContext(Store)
-  const { cart } = state
+  const { state } = useContext(Store) // Using Store from Store.js
+  const { cart } = state // deconstruct
   return (
-    <BrowserRouter>
+    // BrowserRouter comes from React Router Dom
+    <BrowserRouter> 
       {/* d-flex = display flex */}
       <div className="d-flex flex-column site-container">
         <header className="App-header">
@@ -23,11 +24,11 @@ function App() {
               <LinkContainer to="/">
                 <Navbar.Brand>amazonia</Navbar.Brand>
               </LinkContainer>
-              {/* Cart Item number on navbar */}
+              {/* Cart Item number on navbar. me-auto = margin end auto */}
               <Nav className="me-auto">
                 <Link to="/cart" className="nav-link">
                   Cart
-                  {cart.cartItems.length > 0 && (
+                  {cart.cartItems.length > 0 && ( // Ternary operator 
                     <Badge pill bg="danger">
                     {/* a= accumulator, c=currentItem */}
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
@@ -44,8 +45,8 @@ function App() {
           <Container className='mt-3'>
             <Routes>
               <Route path="/" element={<HomeScreen />} />
-              <Route path="/cart" element={<CartScreen />} />
               <Route path="/product/:slug" element={<ProductScreen />} />
+              <Route path="/cart" element={<CartScreen />} />
             </Routes>
           </Container>
         </main>

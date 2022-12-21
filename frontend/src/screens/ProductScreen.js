@@ -19,7 +19,7 @@ import { Store } from '../Store';
 const reducer = (state, action) => {
   /**
      * defining reducer, 2 params state = react state, action = what action
-     * Fetch 3 types of action request success and fail , all case sensitive
+     * Fetch 3 types of action request, success and fail , all case sensitive
      * 
      */
   switch (action.type) {
@@ -36,7 +36,7 @@ const reducer = (state, action) => {
 function ProductScreen() {
   /**
      * useParams() acts as req.params
-     * destruct slug from params
+     * deconstruct slug from params
      * here dealing with single product
      * everything else is same as HomeScreen
      */
@@ -70,6 +70,7 @@ function ProductScreen() {
      * 2. if current product exists on cart increase quantity, else set quantity to 1
      * 3. fetch data from ajax request
      * 4. concate product with quantity by default set to 1
+     * 5. A <Navigate> element changes the current location when it is rendered.
      */
     const existItem = cart.cartItems.find( (x) => x._id===product._id) // --- (1)
     const quantity = existItem? existItem.quantity + 1 : 1 // --- (2) 
@@ -82,7 +83,7 @@ function ProductScreen() {
       type: 'CART_ADD_ITEM', 
       payload: { ...product, quantity} 
     })
-    navigate('/cart')
+    navigate('/cart') // --- (5)
   }
 
   return loading ? (
@@ -101,7 +102,7 @@ function ProductScreen() {
         </Col>
         <Col md={3}>
           {/* Info column
-            ListGroup works as list and ListGroup.item===List Item 
+        ListGroup works as html list and ListGroup.item works as List Item 
         variant="flush" removes outer borders and rounded corners
         */}
           <ListGroup variant="flush">
@@ -119,7 +120,7 @@ function ProductScreen() {
                 numReviews={product.numReviews}
               ></Rating>
             </ListGroup.Item>
-            <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
+            <ListGroup.Item>Price : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
               Description:
               <p>{product.description}</p>

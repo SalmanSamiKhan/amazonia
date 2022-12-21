@@ -9,8 +9,9 @@ import { StoreProvider } from './Store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-  {/* helmet for showing dynamic name based on product in browser tab */}
+  {/* Store coming from Store.js */}
   <StoreProvider>
+  {/* helmet for showing dynamic name based on product in browser tab */}
   <HelmetProvider>
     <App />
   </HelmetProvider>

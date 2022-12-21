@@ -1,7 +1,8 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useState} from "react";
 
 /**
- * Context - Context provides a way to pass data through the component tree without having to pass props down manually at every level.
+ * Context - Context provides a way to pass data through the component tree
+ * without having to pass props down manually at every level.
  * Store - A store holds the whole state tree of your application
  */
 
@@ -9,7 +10,9 @@ export const Store = createContext();
 
 const initialState = {
     cart: {
-        cartItems: []
+        cartItems: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems'))
+        : [],
     }
 }
 
@@ -21,6 +24,11 @@ const initialState = {
  * 3. If item already in cart,
  * 4. use map item on cartItems to update current item with new item
  * 5. If its a new item add it to the end of the array
+ * 6. Return state, 1. inside cart update state
+ * 7. return all item except current one that is to be removed
+ * 8. Saving state in browser local storage memory,
+ * after refresh get the actual state
+ * convert cartItems into string and save it to 'cartItems
 */
 function reducer(state, action) {
     switch (action.type) {
@@ -28,24 +36,36 @@ function reducer(state, action) {
             const newItem = action.payload // --- (1)
             const existItem = state.cart.cartItems.find(
                 (item) => item._id === newItem._id) // --- (2)
-            const cartItems = existItem // --- (3)
-                ? state.cart.cartItems.map(item =>  // --- (4) 
-                    item._id === existItem._id ? newItem : item
-                )
-                : [...state.cart.cartItems, newItem] // --- (5)
+            const cartItems =
+                existItem ? // --- (3)
+                    state.cart.cartItems.map(item =>  // --- (4) 
+                        item._id === existItem._id ? newItem : item
+                    )
+                    : [...state.cart.cartItems, newItem] // --- (5)
+            localStorage.setItem('cartItems', JSON.stringify(cartItems)) // --- (8)
+            return { ...state, cart: { ...state.cart, cartItems } } // --- (6)
+
+        case 'CART_REMOVE_ITEM':{
+            const cartItems = state.cart.cartItems.filter(
+                (item) => item._id!==action.payload._id // --- (7)
+            )
+            localStorage.setItem('cartItems', JSON.stringify(cartItems))
             return { ...state, cart: { ...state.cart, cartItems } }
+        }
         default:
             return state;
     }
 }
-
 /**
- * The <Provider> component makes the Redux store available to any nested components 
- * props. children is a special prop, automatically passed to every component,
+ * 1. The <Provider> component makes the Redux store 
+ * available to any nested components.
+ * 2. props. children is a special prop, 
+ * automatically passed to every component,
  */
 
 export function StoreProvider(props) {
     const [state, dispatch] = useReducer(reducer, initialState)
+    const [stock,setStock] = useState(1000)
     const value = { state, dispatch }
     return (
         <Store.Provider value={value}>{props.children}</Store.Provider>
