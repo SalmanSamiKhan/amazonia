@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState} from "react";
+import { createContext, useReducer} from "react";
 
 /**
  * Context - Context provides a way to pass data through the component tree
@@ -8,11 +8,17 @@ import { createContext, useReducer, useState} from "react";
 
 export const Store = createContext();
 
+// Initial state for logged user info and cart
 const initialState = {
+
+    userInfo: localStorage.getItem('userInfo')
+        ? JSON.parse(localStorage.getItem('userInfo'))
+        : null,
+
     cart: {
         cartItems: localStorage.getItem('cartItems')
-        ? JSON.parse(localStorage.getItem('cartItems'))
-        : [],
+            ? JSON.parse(localStorage.getItem('cartItems'))
+            : [],
     }
 }
 
@@ -45,13 +51,21 @@ function reducer(state, action) {
             localStorage.setItem('cartItems', JSON.stringify(cartItems)) // --- (8)
             return { ...state, cart: { ...state.cart, cartItems } } // --- (6)
 
-        case 'CART_REMOVE_ITEM':{
+        case 'CART_REMOVE_ITEM': {
             const cartItems = state.cart.cartItems.filter(
-                (item) => item._id!==action.payload._id // --- (7)
+                (item) => item._id !== action.payload._id // --- (7)
             )
             localStorage.setItem('cartItems', JSON.stringify(cartItems))
             return { ...state, cart: { ...state.cart, cartItems } }
         }
+        case 'USER_SIGNIN':
+            return { ...state, userInfo: action.payload };
+        case 'USER_SIGNOUT':
+            return {
+                ...state,
+                userInfo: null,
+            };
+
         default:
             return state;
     }
@@ -65,7 +79,6 @@ function reducer(state, action) {
 
 export function StoreProvider(props) {
     const [state, dispatch] = useReducer(reducer, initialState)
-    const [stock,setStock] = useState(1000)
     const value = { state, dispatch }
     return (
         <Store.Provider value={value}>{props.children}</Store.Provider>

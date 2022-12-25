@@ -1,7 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer} from 'react-toastify'
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import Navbar from 'react-bootstrap/Navbar'
+import NavDropdown from 'react-bootstrap/NavDropdown'
 import Badge from 'react-bootstrap/Badge';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
@@ -13,13 +16,20 @@ import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
 
 function App() {
-  const { state } = useContext(Store) // Using Store from Store.js
-  const { cart } = state // deconstruct
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { cart, userInfo } = state;
+
+  const handleSignout = () => {
+    ctxDispatch({ type: 'USER_SIGNOUT' });
+    localStorage.removeItem('userInfo');
+  };
   return (
     // BrowserRouter comes from React Router Dom
-    <BrowserRouter> 
+    <BrowserRouter>
       {/* d-flex = display flex */}
       <div className="d-flex flex-column site-container">
+      {/* react toastify shows error message, limit: 1 toast at a time  */} 
+      <ToastContainer position='bottom-center' limit={1} />
         <header className="App-header">
           <Navbar bg="dark" variant="dark">
             <Container>
@@ -32,11 +42,35 @@ function App() {
                   Cart
                   {cart.cartItems.length > 0 && ( // Ternary operator 
                     <Badge pill bg="danger">
-                    {/* a= accumulator, c=currentItem */}
+                      {/* a= accumulator, c=currentItem */}
                       {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                     </Badge>
                   )}
                 </Link>
+                {/* Afer signin in show this dropdown  */}
+                {userInfo ? (
+                  <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                    <LinkContainer to="/profile">
+                      <NavDropdown.Item>User Profile</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/orderhistory">
+                      <NavDropdown.Item>Order History</NavDropdown.Item>
+                    </LinkContainer>
+                    <NavDropdown.Divider />
+                    <Link
+                      className="dropdown-item"
+                      // After signout redirects to SigninScreen
+                      to="/signin"
+                      onClick={handleSignout}
+                    >
+                      Sign Out
+                    </Link>
+                  </NavDropdown>
+                ) : (
+                  <Link className="nav-link" to="/signin">
+                    Sign In
+                  </Link>
+                )}
               </Nav>
             </Container>
           </Navbar>
@@ -49,6 +83,7 @@ function App() {
               <Route path="/product/:slug" element={<ProductScreen />} />
               <Route path="/cart" element={<CartScreen />} />
               <Route path="/cart/signin" element={<SigninScreen />} />
+              <Route path="/signin" element={<SigninScreen />} />
               <Route path="/" element={<HomeScreen />} />
             </Routes>
           </Container>
