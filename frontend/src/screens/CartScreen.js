@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup'
@@ -10,16 +10,17 @@ import Button from 'react-bootstrap/esm/Button';
 import Card from 'react-bootstrap/esm/Card';
 import axios from 'axios';
 export default function CartScreen() {
+    let [count,setCount] = useState(5)
     /**
      * 1. Deconstruct state dispatch as ctxDispatch
      * 2. Deconstruct cart and cartItems from state. Loop deconstruct
      */
     const navigate = useNavigate()
-    const { state, dispatch: ctxDispatch } = useContext(Store) // --- (1)
+    const { state, dispatch: ctxDispatch} = useContext(Store) // --- (1)
     const { cart: { cartItems } } = state // --- (2)
 
     const updateCartHandler = async (item, quantity)=>{
-        
+        console.log('count '+ count)
         const {data} = await axios.get(`/api/products/${item._id}`)
         if (data.countInStock<quantity){
             window.alert('Sorry! Product is out of stock')
@@ -29,6 +30,7 @@ export default function CartScreen() {
             type: 'CART_ADD_ITEM', 
             payload: { ...item, quantity} 
           })
+          setCount(count-1)
     }
 
     const removeItemHandler = (item)=>{

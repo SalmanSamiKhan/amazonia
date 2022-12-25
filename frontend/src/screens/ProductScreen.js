@@ -74,6 +74,7 @@ function ProductScreen() {
      */
     const existItem = cart.cartItems.find( (x) => x._id===product._id) // --- (1)
     const quantity = existItem? existItem.quantity + 1 : 1 // --- (2) 
+    const count = product.countInStock-quantity
     const {data} = await axios.get(`/api/products/${product._id}`) // --- (3)
     if (data.countInStock<quantity){
       window.alert('Sorry! Product is out of stock')
@@ -81,7 +82,7 @@ function ProductScreen() {
     }
     ctxDispatch({  // --- (4)
       type: 'CART_ADD_ITEM', 
-      payload: { ...product, quantity} 
+      payload: { ...product , count} 
     })
     navigate('/cart') // --- (5)
   }

@@ -1,4 +1,4 @@
-import { createContext, useReducer} from "react";
+import { createContext, useReducer, useState} from "react";
 
 /**
  * Context - Context provides a way to pass data through the component tree
@@ -8,6 +8,7 @@ import { createContext, useReducer} from "react";
 
 export const Store = createContext();
 
+
 // Initial state for logged user info and cart
 const initialState = {
 
@@ -16,6 +17,9 @@ const initialState = {
         : null,
 
     cart: {
+        shippingAddress: localStorage.getItem('shippingAddress')
+            ? JSON.parse(localStorage.getItem('shippingAddress'))
+            : {},
         cartItems: localStorage.getItem('cartItems')
             ? JSON.parse(localStorage.getItem('cartItems'))
             : [],
@@ -49,7 +53,7 @@ function reducer(state, action) {
                     )
                     : [...state.cart.cartItems, newItem] // --- (5)
             localStorage.setItem('cartItems', JSON.stringify(cartItems)) // --- (8)
-            return { ...state, cart: { ...state.cart, cartItems } } // --- (6)
+            return { ...state,  cart: { ...state.cart, cartItems } } // --- (6)
 
         case 'CART_REMOVE_ITEM': {
             const cartItems = state.cart.cartItems.filter(
@@ -64,8 +68,19 @@ function reducer(state, action) {
             return {
                 ...state,
                 userInfo: null,
+                cart:{
+                    cartItems:[],
+                    shippingAddress:{}      
+                }
             };
-
+        case 'SAVE_SHIPPING_ADDRESS':
+            return{
+                ...state,
+                cart:{
+                    ...state.cart,
+                    shippingAddress:action.payload
+                }
+            }
         default:
             return state;
     }
