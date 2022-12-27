@@ -82,7 +82,7 @@ function ProductScreen() {
     }
     ctxDispatch({  // --- (4)
       type: 'CART_ADD_ITEM', 
-      payload: { ...product , count} 
+      payload: { ...product , quantity} 
     })
     navigate('/cart') // --- (5)
   }
