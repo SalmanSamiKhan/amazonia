@@ -150,3 +150,7 @@
 
 1. Create input forms
 2. Handle submit
+
+# 27. Create Place Order Screen
+1. Show cart items, payment and address
+2. Calculate order summary

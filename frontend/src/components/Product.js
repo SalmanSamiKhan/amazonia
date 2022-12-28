@@ -30,8 +30,8 @@ function Product(props) {
         const quantity = existItem ? existItem.quantity + 1 : 1 // copied from ProductScreen.js
         // const countInStock = existItem ? product.countInStock - existItem.quantity : product.countInStock
         // item.countInStock--;
-        console.log('quantity: '+quantity)
-        console.log('stock: '+data.countInStock)
+        // console.log('quantity: '+quantity)
+        // console.log('stock: '+data.countInStock)
         if (product.countInStock < quantity) {
             window.alert('Sorry! Out of stock')
             return;
@@ -45,7 +45,7 @@ function Product(props) {
         //     payload: { ...item, countInStock }
         // })
     }
-    console.log('product stock: '+product.countInStock)
+    // console.log('product stock: '+product.countInStock)
     return (
         <Card>
             <Link to={`product/${product.slug}`}>
