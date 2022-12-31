@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import data from './data.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -29,6 +30,13 @@ app.use(express.urlencoded({extended:true}))
 app.use('/api/seed', seedRouter);
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
+
+// Deployment setup
+const _dirname = path.resolve()
+app.use(express.static(path.join(_dirname, '/frontend/build')))
+app.get('*', (req,res)=>
+    res.sendFile(path.join(_dirname, '/frontend/build/index.html'))
+)
 
 // handle useRoutes error
 app.use((err,req,res,next)=>{

@@ -1,22 +1,21 @@
 {
-    "name": "amazonia",
-    "version": "1.0.0",
-    "description": "# Lessons",
-    "main": "index.js",
-    "scripts": {
-      "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
-      "start": "node backend/server.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-      "type": "git",
-      "url": "git+https://github.com/SalmanSamiKhan/amazonia.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-      "url": "https://github.com/SalmanSamiKhan/amazonia/issues"
-    },
-    "homepage": "https://github.com/SalmanSamiKhan/amazonia#readme"
-  }
-  
+  "name": "amazonia",
+  "version": "1.0.0",
+  "description": "1. create products array\r 2. add product images\r 3. render products\r 4. style products",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SalmanSamiKhan/amazonia.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SalmanSamiKhan/amazonia/issues"
+  },
+  "homepage": "https://github.com/SalmanSamiKhan/amazonia#readme"
+}
