@@ -17,11 +17,10 @@ export default function CartScreen() {
     const navigate = useNavigate()
     const { state, dispatch: ctxDispatch} = useContext(Store) // --- (1)
     const { cart: { cartItems } } = state // --- (2)
-
     const updateCartHandler = async (item, quantity)=>{
         const {data} = await axios.get(`/api/products/${item._id}`)
         if (data.countInStock<quantity){
-            window.alert('Sorry! Product is out of stock')
+            window.alert('Sorry! You have reached maximum limit for this product.')
             return;
           }
           ctxDispatch({  // --- (4)

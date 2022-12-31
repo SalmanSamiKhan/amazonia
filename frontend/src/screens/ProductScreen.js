@@ -14,6 +14,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { getError } from '../utils';
 import { Store } from '../Store';
+import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
   /**
@@ -77,12 +78,13 @@ function ProductScreen() {
     const {data} = await axios.get(`/api/products/${product._id}`) // --- (3)
     
     if (data.countInStock<quantity){
-      window.alert('Sorry! Product is out of stock')
+      // window.alert('Sorry! Product is out of stock')
+      toast.error('Sorry! You have reached maximum limit for this product.')
       return;
     }
     ctxDispatch({  // --- (4)
       type: 'CART_ADD_ITEM', 
-      payload: { ...product } 
+      payload: { ...product, quantity } 
     })
     navigate('/cart') // --- (5)
   }

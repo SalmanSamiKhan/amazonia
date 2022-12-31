@@ -3,8 +3,9 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import Rating from "./Rating"
 import axios from "axios"
-import { useContext} from "react"
+import { useContext } from "react"
 import { Store } from "../Store"
+import { toast } from 'react-toastify';
 
 
 function Product(props) {
@@ -33,7 +34,8 @@ function Product(props) {
         // console.log('quantity: '+quantity)
         // console.log('stock: '+data.countInStock)
         if (product.countInStock < quantity) {
-            window.alert('Sorry! Out of stock')
+            // window.alert('Sorry! Out of stock')
+            toast.error('Sorry! You have reached maximum limit for this product.')
             return;
         }
         ctxDispatch({  // --- (4)
@@ -59,7 +61,7 @@ function Product(props) {
                 <Card.Text><strong>${product.price}</strong></Card.Text>
                 {/* <Card.Text><strong>{product.countInStock}</strong></Card.Text> */}
                 {/* Check if out of stock */}
-                {product.countInStock < product.quantity ? (
+                {product.countInStock < 1 ? (
                     <Button variant="light" disabled>
                         Out of stock
                     </Button>
