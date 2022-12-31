@@ -10,6 +10,7 @@ import userRouter from './routes/userRoutes.js';
 dotenv.config();
 
 // connect to mongoose, details are written in .env file
+mongoose.set("strictQuery", false);
 mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => {
